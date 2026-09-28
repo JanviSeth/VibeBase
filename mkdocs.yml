@@ -56,5 +56,5 @@ nav:
   - Turbines: turbines.md
   - Cutters and Crushers: cutters-and-crushers.md
   - Tools:
-      - Bearing Fault Frequency Calculator: bearing-fault-calculator.md
+      - Fault Frequency Calculator: bearing-fault-calculator.md
   - Consulting Checklists: checklists.md
