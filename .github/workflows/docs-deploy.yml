@@ -22,10 +22,12 @@ jobs:
           python-version: '3.x'
 
       - name: Install MkDocs dependencies
-        run: pip install mkdocs mkdocs-material
+        run: pip install mkdocs mkdocs-material mkdocs-encryptcontent-plugin
 
       - name: Build documentation
         run: mkdocs build
+        env:
+          ENCRYPT_PASSWORD: ${{ secrets.ENCRYPT_PASSWORD }}
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
