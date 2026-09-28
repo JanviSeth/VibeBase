@@ -1,232 +1,88 @@
-# Bearing Fault Frequency Calculator
+# Fault Frequency Calculator
 
-Rolling-element bearings generate characteristic vibration frequencies that depend on shaft speed and bearing geometry. These frequencies are commonly used to identify developing faults in the inner race, outer race, rolling elements or cage.
+Enter the running speed and the geometry of the component to get the frequencies to look for in the spectrum. Everything is calculated in your browser; nothing is sent anywhere.
 
-The calculator below determines the four main characteristic bearing frequencies:
+!!! info "Use exact geometry for real diagnoses"
+    The defaults are an example (a 6205 deep-groove ball bearing). For real cases, take the geometry or the frequency multipliers from the bearing manufacturer's catalog or online calculator. Small geometry differences shift the frequencies by a few percent, which matters when you are matching peaks.
 
-- **FTF** — Fundamental Train Frequency
-- **BPFO** — Ball Pass Frequency Outer race
-- **BPFI** — Ball Pass Frequency Inner race
-- **BSF** — Ball Spin Frequency
-
-!!! info "Use the bearing geometry where possible"
-    Fault frequencies vary between bearing designs. Use the manufacturer's bearing geometry or bearing catalogue data when available. Generic bearing dimensions can give an approximate result but should not be treated as an exact fault frequency.
-
-## Characteristic frequencies
-
-| Frequency | Typical order | Associated component |
-|---|---:|---|
-| **FTF** | ~0.4–0.5x | Cage / retainer |
-| **BPFO** | ~3–5x | Outer race |
-| **BPFI** | ~4–6x | Inner race |
-| **BSF** | ~2–3x | Rolling element |
-
-The exact order depends on the bearing geometry and contact angle.
-
-## Calculator
-
-### Operating conditions
-
-**Shaft speed (RPM)**
-
-<input id="rpm" type="number" value="1500" min="1" step="1">
-
-### Bearing geometry
-
-**Number of rolling elements**
-
-<input id="elements" type="number" value="8" min="1" step="1">
-
-**Rolling-element diameter**
-
-<input id="element-diameter" type="number" value="10" min="0.01" step="0.01">
-
-**Pitch diameter**
-
-<input id="pitch-diameter" type="number" value="50" min="0.01" step="0.01">
-
-**Contact angle (°)**
-
-<input id="contact-angle" type="number" value="0" step="0.1">
-
-<button class="md-button md-button--primary" id="calculate-bearing">
-    Calculate fault frequencies
-</button>
-
-<div id="calculator-results">
-
-## Results
-
-| Fault frequency | Order | Frequency |
-|---|---:|---:|
-| **FTF** | — | — |
-| **BPFO** | — | — |
-| **BPFI** | — | — |
-| **BSF** | — | — |
-
+<div class="ffc" id="ffc">
+<div class="ffc-card">
+<h3>1. Running speed</h3>
+<div class="ffc-grid">
+<label>Speed<input id="ffc-speed" type="number" min="0" step="any" value="1480"></label>
+<label>Unit<select id="ffc-unit"><option value="rpm">RPM</option><option value="hz">Hz</option></select></label>
+</div>
+<p class="ffc-note" id="ffc-speed-note"></p>
+</div>
+<div class="ffc-card">
+<h3>2. Rolling-element bearing</h3>
+<div class="ffc-grid">
+<label>Number of rolling elements, n<input id="ffc-n" type="number" min="1" step="1" value="9"></label>
+<label>Element diameter, d (mm)<input id="ffc-d" type="number" min="0" step="any" value="7.94"></label>
+<label>Pitch diameter, D (mm)<input id="ffc-D" type="number" min="0" step="any" value="39.04"></label>
+<label>Contact angle, β (degrees)<input id="ffc-beta" type="number" step="any" value="0"></label>
+</div>
+<p><button type="button" id="ffc-preset" class="md-button">Reset to example: 6205 ball bearing</button></p>
+<div class="ffc-scroll"><table class="ffc-table"><thead><tr><th>Frequency</th><th>Order (× shaft)</th><th>Hz</th><th>CPM</th><th>2× (Hz)</th><th>3× (Hz)</th></tr></thead><tbody id="ffc-bearing-out"></tbody></table></div>
+<p class="ffc-error" id="ffc-bearing-err"></p>
+</div>
+<div class="ffc-card">
+<h3>3. Gear mesh, blade pass, vane pass, lobe pass</h3>
+<div class="ffc-grid">
+<label>Number of teeth, blades, vanes or lobes<input id="ffc-count" type="number" min="1" step="1" value="12"></label>
+</div>
+<p class="ffc-note">Use the speed of the shaft that carries the gear, impeller or rotor. For a gearbox, enter that shaft's speed above.</p>
+<div class="ffc-scroll"><table class="ffc-table"><thead><tr><th>Frequency</th><th>Order (× shaft)</th><th>Hz</th><th>CPM</th><th>2× (Hz)</th><th>3× (Hz)</th></tr></thead><tbody id="ffc-count-out"></tbody></table></div>
+</div>
+<div class="ffc-card">
+<h3>4. Belt drive</h3>
+<div class="ffc-grid">
+<label>Pulley diameter (mm)<input id="ffc-pulley" type="number" min="0" step="any" value="150"></label>
+<label>Belt length (mm)<input id="ffc-belt" type="number" min="0" step="any" value="1500"></label>
+</div>
+<p class="ffc-note">Use the speed of the pulley whose diameter you enter. Belt problems often show at 1× to 4× belt frequency.</p>
+<div class="ffc-scroll"><table class="ffc-table"><thead><tr><th>Frequency</th><th>Order (× shaft)</th><th>Hz</th><th>CPM</th><th>2× (Hz)</th><th>3× (Hz)</th></tr></thead><tbody id="ffc-belt-out"></tbody></table></div>
+<p class="ffc-error" id="ffc-belt-err"></p>
+</div>
+<div class="ffc-card">
+<h3>5. Induction motor: slip and pole pass</h3>
+<div class="ffc-grid">
+<label>Line frequency<select id="ffc-line"><option value="50">50 Hz</option><option value="60">60 Hz</option></select></label>
+<label>Number of poles<input id="ffc-poles" type="number" min="2" step="2" value="4"></label>
+</div>
+<p class="ffc-note">Uses the running speed above. Pole pass sidebands around 1× are most visible at high load; use a high-resolution spectrum.</p>
+<div class="ffc-scroll"><table class="ffc-table"><thead><tr><th>Quantity</th><th>Value</th></tr></thead><tbody id="ffc-motor-out"></tbody></table></div>
+<p class="ffc-error" id="ffc-motor-err"></p>
+</div>
 </div>
 
-!!! tip "Spectrum interpretation"
-    Compare the calculated frequencies with peaks in the vibration spectrum. A bearing fault does not necessarily produce a single peak exactly at the calculated frequency. Harmonics, sidebands and modulation are commonly present.
+## How to use the results
 
-!!! warning "A frequency match is not a diagnosis"
-    A peak at BPFO, BPFI, BSF or FTF is an indication that should be evaluated together with amplitude, harmonics, sidebands, time waveform, bearing operating conditions and trend data. Other machine components can also generate frequencies close to bearing fault frequencies.
+1. Look for peaks at these frequencies and at their 2× and 3× harmonics, allowing a few percent tolerance.
+2. Bearing tones are non-synchronous: they will not sit at a whole multiple of running speed.
+3. An inner race defect (BPFI) usually shows sidebands spaced at running speed. A rolling-element defect usually shows most clearly at 2 × BSF, which is the 2× column of the BSF row.
+4. Confirm bearing frequencies in the envelope spectrum before alerting. See [Bearings](bearings.md).
+5. On variable-speed machines, work in orders (the "Order" column) so the peaks stay put when speed changes.
 
-## Equations
+## Formulas
 
-The characteristic frequencies are calculated from the shaft speed and bearing geometry.
+Bearing formulas assume a stationary outer race and a rotating inner race, with pure rolling and no slip. In practice, measured values can differ from calculated ones by a few percent.
 
-### Fundamental Train Frequency (FTF)
-
-$$
-FTF =
-\frac{RPM}{2}
-\left(
-1-\frac{d}{D}\cos\theta
-\right)
-$$
-
-### Ball Pass Frequency Outer race (BPFO)
-
-$$
-BPFO =
-\frac{n \cdot RPM}{2}
-\left(
-1-\frac{d}{D}\cos\theta
-\right)
-$$
-
-### Ball Pass Frequency Inner race (BPFI)
-
-$$
-BPFI =
-\frac{n \cdot RPM}{2}
-\left(
-1+\frac{d}{D}\cos\theta
-\right)
-$$
-
-### Ball Spin Frequency (BSF)
-
-$$
-BSF =
-\frac{D}{2d}
-RPM
-\left[
-1-
-\left(
-\frac{d}{D}\cos\theta
-\right)^2
-\right]
-$$
-
-Where:
-
-| Parameter | Meaning |
+| Frequency | Formula |
 |---|---|
-| `RPM` | Shaft rotational speed |
-| `n` | Number of rolling elements |
-| `d` | Rolling-element diameter |
-| `D` | Bearing pitch diameter |
-| `θ` | Contact angle |
-
-## Understanding the fault frequencies
-
-### FTF — Cage frequency
-
-!!! info "Reference"
-    FTF is associated with the rotational speed of the bearing cage.
-
-    **Typical signature:** low-frequency vibration at approximately 0.4–0.5x running speed.
-
-    **Possible causes:** cage damage, cage instability, severe bearing wear or lubrication problems.
-
-### BPFO — Outer-race frequency
-
-!!! warning "Watch"
-    BPFO is associated with a defect on the stationary outer race.
-
-    **Typical signature:** BPFO and harmonics, often with impacts visible in the time waveform.
-
-    **Possible causes:** localized outer-race damage, fatigue spalling, contamination or improper installation.
-
-    **Advice:** check whether the BPFO harmonics are accompanied by an increase in high-frequency or envelope vibration.
-
-### BPFI — Inner-race frequency
-
-!!! warning "Watch"
-    BPFI is associated with a defect on the rotating inner race.
-
-    **Typical signature:** BPFI and harmonics, often accompanied by sidebands spaced at 1x running speed.
-
-    **Possible causes:** inner-race fatigue, contamination, mounting problems or excessive loading.
-
-    **Advice:** check the spectrum for BPFI harmonics and 1x sidebands. Compare the result with the bearing's operating speed.
-
-### BSF — Rolling-element frequency
-
-!!! warning "Watch"
-    BSF is associated with a defect on a rolling element.
-
-    **Typical signature:** BSF and harmonics, sometimes with sidebands at the cage frequency.
-
-    **Possible causes:** rolling-element damage, spalling, cracking or lubrication-related damage.
-
-    **Advice:** confirm the frequency against the actual bearing geometry because BSF is particularly sensitive to bearing dimensions and contact conditions.
-
-## Harmonics and sidebands
-
-Bearing faults rarely appear as a perfectly isolated frequency.
-
-| Pattern | Possible indication |
-|---|---|
-| BPFO + harmonics | Outer-race defect |
-| BPFI + harmonics | Inner-race defect |
-| BSF + harmonics | Rolling-element defect |
-| BPFI sidebands at 1x | Inner-race defect on a rotating bearing |
-| BSF sidebands at FTF | Rolling-element / cage interaction |
-| Increasing high-frequency energy | Developing impact-related bearing damage |
-
-!!! info "Look at the complete signature"
-    Frequency alone should not be used to identify a bearing fault. Confirm the characteristic frequency using harmonics, sidebands, time waveform and trend behaviour.
-
-## Example
-
-For a bearing operating at **1500 RPM**, the shaft frequency is:
-
-$$
-1x = \frac{1500}{60} = 25\ Hz
-$$
-
-If the calculated BPFO is **90 Hz**:
-
-$$
-\frac{90}{25} = 3.6x
-$$
-
-A spectrum peak around **3.6x running speed**, particularly when accompanied by BPFO harmonics and an increasing envelope trend, is consistent with an outer-race-related bearing fault.
-
-## Practical workflow
-
-| Step | Action |
-|---|---|
-| 1 | Determine the actual shaft speed |
-| 2 | Identify the exact bearing model |
-| 3 | Obtain the bearing geometry |
-| 4 | Calculate FTF, BPFO, BPFI and BSF |
-| 5 | Compare the frequencies with the vibration spectrum |
-| 6 | Check harmonics and sidebands |
-| 7 | Confirm with time waveform and trend data |
-| 8 | Inspect the bearing if the evidence indicates deterioration |
-
-!!! tip "Variable-speed machines"
-    For variable-speed equipment, calculate the characteristic frequencies from the actual shaft speed at the time of measurement. Bearing fault frequencies will move with running speed.
+| BPFO | (n / 2) × (1 − (d / D) cos β) × shaft speed |
+| BPFI | (n / 2) × (1 + (d / D) cos β) × shaft speed |
+| BSF | (D / 2d) × (1 − ((d / D) cos β)²) × shaft speed |
+| FTF | ½ × (1 − (d / D) cos β) × shaft speed |
+| Mesh / blade / vane / lobe pass | count × shaft speed |
+| Belt frequency | π × pulley diameter × pulley speed ÷ belt length |
+| Synchronous speed | 120 × line frequency ÷ poles (RPM) |
+| Slip frequency | (synchronous speed − running speed) ÷ 60 (Hz) |
+| Pole pass frequency | slip frequency × poles |
 
 ## Related pages
 
 - [Bearings](bearings.md)
-- [Vibration Basics](vibration-basics.md)
 - [Motors](motors.md)
-- [Pumps](pumps.md)
-- [Fans and Blowers](fans-and-blowers.md)
 - [Gearboxes](gearboxes.md)
+- [Vibration basics](vibration-basics.md)
