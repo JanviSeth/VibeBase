@@ -1,0 +1,22 @@
+site_name: Predictive Maintenance Encyclopedia
+
+theme:
+  name: material
+
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - pymdownx.superfences
+
+nav:
+  - Home: index.md
+  - Motors: motors.md
+  - Bearings: bearings.md
+  - Fans and Blowers: fans-and-blowers.md
+  - Pumps: pumps.md
+  - Gearboxes: gearboxes.md
+  - Turbines and Compressors: turbines-and-compressors.md
+  - Cutters and Crushers: cutters-and-crushers.md
+  - Vibration Basics: vibration-basics.md
