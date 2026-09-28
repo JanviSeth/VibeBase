@@ -9,6 +9,7 @@ plugins:
 markdown_extensions:
   - admonition
   - pymdownx.superfences
+  - pymdownx.details
 
 nav:
   - Home: index.md
