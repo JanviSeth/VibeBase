@@ -634,33 +634,16 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Calculator">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#operating-conditions" class="md-nav__link">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#results" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Operating conditions
+        Results
       
     </span>
   </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#bearing-geometry" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Bearing geometry
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -919,33 +902,16 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Calculator">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#operating-conditions" class="md-nav__link">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#results" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Operating conditions
+        Results
       
     </span>
   </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#bearing-geometry" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Bearing geometry
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1179,24 +1145,50 @@
 </table>
 <p>The exact order depends on the bearing geometry and contact angle.</p>
 <h2 id="calculator">Calculator</h2>
-<h3 id="operating-conditions">Operating conditions</h3>
-<p><strong>Shaft speed (RPM)</strong></p>
-<p><input id="rpm" type="number" value="1500" min="1" step="1"></p>
-<h3 id="bearing-geometry">Bearing geometry</h3>
-<p><strong>Number of rolling elements</strong></p>
-<p><input id="elements" type="number" value="8" min="1" step="1"></p>
-<p><strong>Rolling-element diameter</strong></p>
-<p><input id="element-diameter" type="number" value="10" min="0.01" step="0.01"></p>
-<p><strong>Pitch diameter</strong></p>
-<p><input id="pitch-diameter" type="number" value="50" min="0.01" step="0.01"></p>
-<p><strong>Contact angle (°)</strong></p>
-<p><input id="contact-angle" type="number" value="0" step="0.1"></p>
-<p><button class="md-button md-button--primary" id="calculate-bearing">
-    Calculate fault frequencies
-</button></p>
-<div id="calculator-results">
+<p>Enter the operating speed and bearing geometry below.</p>
+<div class="bearing-calculator">
 
-## Results
+  <div class="calculator-section">
+    <h3>Operating conditions</h3>
+
+    <div class="calculator-field">
+      <label for="rpm">Shaft speed (RPM)</label>
+      <input id="rpm" type="number" value="1500" min="1" step="1">
+    </div>
+
+    <div class="calculator-field">
+      <label for="elements">Number of rolling elements</label>
+      <input id="elements" type="number" value="8" min="1" step="1">
+    </div>
+  </div>
+
+  <div class="calculator-section">
+    <h3>Bearing geometry</h3>
+
+    <div class="calculator-field">
+      <label for="element-diameter">Rolling-element diameter</label>
+      <input id="element-diameter" type="number" value="10" min="0.01" step="0.01">
+    </div>
+
+    <div class="calculator-field">
+      <label for="pitch-diameter">Pitch diameter</label>
+      <input id="pitch-diameter" type="number" value="50" min="0.01" step="0.01">
+    </div>
+
+    <div class="calculator-field">
+      <label for="contact-angle">Contact angle (°)</label>
+      <input id="contact-angle" type="number" value="0" step="0.1">
+    </div>
+  </div>
+
+</div>
+
+<p><button class="md-button md-button--primary" id="calculate-bearing">
+  Calculate fault frequencies
+</button></p>
+<div id="calculator-results" class="calculator-results">
+
+<h3>Results</h3>
 
 | Fault frequency | Order | Frequency |
 |---|---:|---:|
@@ -1207,6 +1199,39 @@
 
 </div>
 
+<h2 id="results">Results</h2>
+<table>
+<thead>
+<tr>
+<th>Fault frequency</th>
+<th style="text-align: right;">Order</th>
+<th style="text-align: right;">Frequency</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>FTF</strong></td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td><strong>BPFO</strong></td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td><strong>BPFI</strong></td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td><strong>BSF</strong></td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+</tbody>
+</table>
+</div>
 <div class="admonition tip">
 <p class="admonition-title">Spectrum interpretation</p>
 <p>Compare the calculated frequencies with peaks in the vibration spectrum. A bearing fault does not necessarily produce a single peak exactly at the calculated frequency. Harmonics, sidebands and modulation are commonly present.</p>
