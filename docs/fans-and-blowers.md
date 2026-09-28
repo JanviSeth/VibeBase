@@ -1,14 +1,3 @@
-# Fans And Blowers
-
-## Overview
-
-## Common Faults
-
-## Frequency Signatures
-
-## Symptoms
-
-## Alert Guidance
 # Fans and Blowers
 
 Fans are sensitive to imbalance from build-up and wear, and to aerodynamic conditions. Many faults change with damper position or flow, so record the operating condition with every reading.
