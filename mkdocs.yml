@@ -2,23 +2,47 @@ site_name: "Vibration Knowledge Base: A Predictive Maintenance Encyclopedia"
 
 theme:
   name: material
+  features:
+    - navigation.top
+    - search.suggest
+    - search.highlight
+  palette:
+    - scheme: default
+      toggle:
+        icon: material/weather-night
+        name: Dark mode
+    - scheme: slate
+      toggle:
+        icon: material/weather-sunny
+        name: Light mode
 
 plugins:
   - search
+  - encryptcontent:
+      password_inventory:
+        internal: !ENV ENCRYPT_PASSWORD
 
 markdown_extensions:
   - admonition
-  - pymdownx.superfences
+  - attr_list
+  - md_in_html
   - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
 
 nav:
   - Home: index.md
+  - Vibration Basics: vibration-basics.md
   - Motors: motors.md
   - Bearings: bearings.md
   - Fans and Blowers: fans-and-blowers.md
   - Pumps: pumps.md
-  - Gearboxes: gearboxes.md
   - Compressors: compressors.md
+  - Gearboxes: gearboxes.md
   - Turbines: turbines.md
   - Cutters and Crushers: cutters-and-crushers.md
-  - Vibration Basics: vibration-basics.md
+  - 🔒 Consulting Checklists: checklists.md
