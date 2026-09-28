@@ -45,7 +45,6 @@ extra_css:
 
 
 nav:
-  - Home: index.md
   - Vibration Basics: vibration-basics.md
   - Motors: motors.md
   - Bearings: bearings.md
@@ -54,7 +53,7 @@ nav:
   - Compressors: compressors.md
   - Gearboxes: gearboxes.md
   - Turbines: turbines.md
-  - Cutters and Crushers: cutters-and-crushers.md
+  - Cutters, Crushers, and Shredders: cutters-and-crushers.md
   - Tools:
       - Fault Frequency Calculator: bearing-fault-calculator.md
   - Consulting Checklists: checklists.md
