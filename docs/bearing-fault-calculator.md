@@ -25,35 +25,61 @@ The exact order depends on the bearing geometry and contact angle.
 
 ## Calculator
 
-### Operating conditions
+Enter the operating speed and bearing geometry below.
 
-**Shaft speed (RPM)**
+<div class="bearing-calculator">
 
-<input id="rpm" type="number" value="1500" min="1" step="1">
+  <div class="calculator-section">
+    <h3>Operating conditions</h3>
 
-### Bearing geometry
+    <div class="calculator-field">
+      <label for="rpm">Shaft speed (RPM)</label>
+      <input id="rpm" type="number" value="1500" min="1" step="1">
+    </div>
 
-**Number of rolling elements**
+    <div class="calculator-field">
+      <label for="elements">Number of rolling elements</label>
+      <input id="elements" type="number" value="8" min="1" step="1">
+    </div>
+  </div>
 
-<input id="elements" type="number" value="8" min="1" step="1">
+  <div class="calculator-section">
+    <h3>Bearing geometry</h3>
 
-**Rolling-element diameter**
+    <div class="calculator-field">
+      <label for="element-diameter">Rolling-element diameter</label>
+      <input id="element-diameter" type="number" value="10" min="0.01" step="0.01">
+    </div>
 
-<input id="element-diameter" type="number" value="10" min="0.01" step="0.01">
+    <div class="calculator-field">
+      <label for="pitch-diameter">Pitch diameter</label>
+      <input id="pitch-diameter" type="number" value="50" min="0.01" step="0.01">
+    </div>
 
-**Pitch diameter**
+    <div class="calculator-field">
+      <label for="contact-angle">Contact angle (°)</label>
+      <input id="contact-angle" type="number" value="0" step="0.1">
+    </div>
+  </div>
 
-<input id="pitch-diameter" type="number" value="50" min="0.01" step="0.01">
-
-**Contact angle (°)**
-
-<input id="contact-angle" type="number" value="0" step="0.1">
+</div>
 
 <button class="md-button md-button--primary" id="calculate-bearing">
-    Calculate fault frequencies
+  Calculate fault frequencies
 </button>
 
-<div id="calculator-results">
+<div id="calculator-results" class="calculator-results">
+
+<h3>Results</h3>
+
+| Fault frequency | Order | Frequency |
+|---|---:|---:|
+| **FTF** | — | — |
+| **BPFO** | — | — |
+| **BPFI** | — | — |
+| **BSF** | — | — |
+
+</div>
 
 ## Results
 
