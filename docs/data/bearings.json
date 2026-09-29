@@ -1,0 +1,29 @@
+[
+  {
+    "designation": "6205",
+    "type": "Deep groove ball bearing",
+    "n": 9,
+    "d_mm": 7.94,
+    "D_mm": 39.04,
+    "beta_deg": 0,
+    "source": "Published in multiple vibration-analysis references; cross-check against the SKF product page before relying on it."
+  },
+  {
+    "designation": "6208",
+    "type": "Deep groove ball bearing",
+    "n": 9,
+    "d_mm": 12.3,
+    "D_mm": 60,
+    "beta_deg": 0,
+    "source": "Published in bearing-geometry literature; cross-check against the SKF product page before relying on it."
+  },
+  {
+    "designation": "EXAMPLE — direct orders",
+    "type": "Use this format if the manufacturer's page gives you BPFO/BPFI/BSF/FTF directly instead of geometry",
+    "bpfo_order": 3.585,
+    "bpfi_order": 5.415,
+    "bsf_order": 2.357,
+    "ftf_order": 0.399,
+    "source": "Delete this entry — it is a template, not a real bearing."
+  }
+]
