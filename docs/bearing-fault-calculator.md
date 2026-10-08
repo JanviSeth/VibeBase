@@ -80,6 +80,9 @@ Bearing formulas assume a stationary outer race and a rotating inner race, with 
 | Slip frequency | (synchronous speed − running speed) ÷ 60 (Hz) |
 | Pole pass frequency | slip frequency × poles |
 
+
+hey
+
 ## Related pages
 
 - [Bearings](bearings.md)
